@@ -1,12 +1,14 @@
 # installation
 
+windows10 & python 3.6+
+
 ```sh
-python3 -m venv venv
+python -m venv venv
 pip install -r requirements.txt
 ```
 
 # run
 
 ```sh
-python3 main.py
+python main.py
 ```
