@@ -1,4 +1,6 @@
 import pymysql
+import pandas as pd
+
 import json
 
 
@@ -30,3 +32,9 @@ class DataBase:
                                    user=self.user, password=self.password,
                                    charset=self.charset, autocommit=self.autocommit)
         self.cur = self.con.cursor()
+
+    def to_df(self, SQL):
+        self.cur.execute(SQL)
+        columns = [c[0] for c in self.cur.description]
+        df = pd.DataFrame(columns=columns, data=self.cur.fetchall())
+        return df
