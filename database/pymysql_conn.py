@@ -36,5 +36,6 @@ class DataBase:
     def to_df(self, SQL):
         self.cur.execute(SQL)
         columns = [c[0] for c in self.cur.description]
-        df = pd.DataFrame(columns=columns, data=self.cur.fetchall())
+        data = list(self.cur.fetchall())
+        df = pd.DataFrame(columns=columns, data=data)
         return df
