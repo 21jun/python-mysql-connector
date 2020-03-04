@@ -1,7 +1,7 @@
 {
     "host": "localhost",
     "port": 3306,
-    "db": "oasis",
+    "db": "yt",
     "user": "root",
     "password": "1qazxc",
     "charset": "utf8mb4"

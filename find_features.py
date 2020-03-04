@@ -26,7 +26,7 @@ class WordFrequency:
         self.db = DataBase()
         self.SQL = \
             """
-        SELECT appid, gameName, videoId, likeCount, replyCount, text FROM yt_comment_steam where language='en';
+        SELECT appid, gameName, videoId, likeCount, replyCount, text FROM yt_comment_steam where language='en' and filter = 0;
         """
         self.comments = self.db.to_df(self.SQL)
         self.games = {}
