@@ -30,8 +30,6 @@ class WordFrequency:
         """
         self.comments = self.db.to_df(self.SQL)
         self.games = {}
-        self.gameNames = self.comments['gameName'].unique()
-        self.appids = self.comments
         self.stop_words = stopwords.words('english')
 
         g = self.comments.groupby(['appid', 'gameName']).size().reset_index()
@@ -42,15 +40,7 @@ class WordFrequency:
             text = text.tolist()
             text = [clean_text(t) for t in text]
             text = ' '.join(text)
-            # print(appid)
-            # print(text)
             self.games[gameName] = {'appid': appid, 'text': text}
-        # for gameName in self.gameNames:
-        #     text = self.comments[self.comments['gameName'] == gameName]['text']
-        #     text = text.tolist()
-        #     text = [clean_text(t) for t in text]
-        #     text = ' '.join(text)
-        #     self.games[gameName] = text
 
     def get_word_count(self, gameName):
         tokens = nltk.word_tokenize(self.games[gameName]['text'])
@@ -66,6 +56,13 @@ class WordFrequency:
         with open(path/fileName, 'wb+') as f:
             pickle.dump(word_count, f, pickle.HIGHEST_PROTOCOL)
 
+    def save_all(self, path):
+
+        for idx, gameName in enumerate(self.games):  # iter over dict with keys
+            cnt = self.get_word_count(gameName)
+            self.save_word_count(gameName, cnt, path)
+            print(idx, gameName)
+
     def load_word_count(self, gameName, path):
         # path = Path(path).glob("**/*.pickle")
         # files = [x for x in path if x.is_file()]
@@ -78,14 +75,22 @@ class WordFrequency:
 
         return word_counts
 
+    def load_all(self, path):
+        for idx, gameName in enumerate(self.games):  # iter over dict with keys
+            self.load_word_count(gameName, path)
+            print(idx, gameName)
+
 
 if __name__ == '__main__':
 
-    gameName = "Dota Underlords"
+    gameName = "F1 2019"
     path = Path("word_counts")
 
     wf = WordFrequency()
-    cnt = wf.get_word_count(gameName)
-    wf.save_word_count(gameName, cnt, "word_counts")
-    # cnt = wf.load_word_count(gameName, path)
+    # cnt = wf.get_word_count(gameName)
+    # wf.save_word_count(gameName, cnt, "word_counts")
+
+    cnt = wf.load_word_count(gameName, path)
     print(cnt)
+
+    # wf.save_all(path)
