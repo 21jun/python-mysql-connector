@@ -1,6 +1,6 @@
 autopep8==1.5
 cffi==1.13.2
-cryptography==2.8
+cryptography==3.2
 numpy==1.18.1
 pandas==0.25.3
 pycodestyle==2.5.0
